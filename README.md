@@ -1,15 +1,15 @@
 # E-Commerce Price Scraper 🛒
 
-โปรแกรมสำหรับดึงข้อมูลราคาสินค้าจากเว็บไซต์ e-commerce อย่างอัตโนมัติ พร้อมระบบป้องกันการตรวจจับ bot
+Automated web scraper for extracting product pricing data from e-commerce websites with built-in anti-detection measures.
 
 ## ✨ Features
 
-- 🔄 **Auto-scraping หลายหน้า** - ดึงข้อมูลจากหลายหน้าได้อัตโนมัติ
-- 🛡️ **Anti-detection** - มีระบบป้องกันการตรวจจับ bot
-- ☁️ **Cloudflare bypass** - รองรับการข้าม Cloudflare challenge
-- 💾 **Auto-save CSV** - บันทึกข้อมูลเป็น CSV อัตโนมัติ
-- 🔄 **Auto-restart driver** - รีสตาร์ท driver ทุก 50 หน้าเพื่อประหยัด memory
-- ⏱️ **Random delays** - ใช้ delay แบบสุ่มเพื่อหลีกเลี่ยงการตรวจจับ
+- 🔄 **Multi-page Auto-scraping** - Automatically scrape data from multiple pages
+- 🛡️ **Anti-detection System** - Built-in bot detection prevention
+- ☁️ **Cloudflare Bypass** - Handles Cloudflare challenge pages
+- 💾 **Auto-save to CSV** - Automatically saves data to CSV format
+- 🔄 **Auto-restart Driver** - Restarts driver every 50 pages to save memory
+- ⏱️ **Random Delays** - Uses random delays to avoid detection
 
 ## 📋 Requirements
 
@@ -22,17 +22,17 @@
 ### 1. Clone repository
 
 ```bash
-git clone <your-repository-url>
-cd "Sacraper project"
+git clone https://github.com/kitthiphatn/scraper-projecttest.git
+cd scraper-projecttest
 ```
 
-### 2. ติดตั้ง dependencies
+### 2. Install dependencies
 
 ```bash
 pip install selenium webdriver-manager
 ```
 
-หรือใช้ requirements.txt (ถ้ามี):
+Or use requirements.txt:
 
 ```bash
 pip install -r requirements.txt
@@ -40,98 +40,98 @@ pip install -r requirements.txt
 
 ## 🚀 Usage
 
-### การใช้งานพื้นฐาน
+### Basic Usage
 
 ```bash
 python MISS.py
 ```
 
-### การปรับแต่ง Configuration
+### Configuration
 
-แก้ไขค่าต่างๆ ในไฟล์ `MISS.py`:
+Edit the configuration variables in `MISS.py`:
 
 ```python
-# URL ของเว็บไซต์ที่ต้องการ scrape
+# Target website URL
 BASE_URL = "https://example-ecommerce.com/products"
 
-# หน้าเริ่มต้นและหน้าสุดท้าย
+# Start and end page numbers
 START_PAGE = 1
 END_PAGE = 100
 
-# ชื่อไฟล์ CSV ที่จะบันทึก
+# Output CSV filename
 FILENAME = "product_prices.csv"
 ```
 
-### การปรับแต่ง CSS Selectors
+### Customizing CSS Selectors
 
-ปรับ CSS selectors ให้ตรงกับเว็บไซต์เป้าหมาย:
+Adjust CSS selectors to match your target website:
 
 ```python
-# หา product cards
+# Find product cards
 products = driver.find_elements(By.CSS_SELECTOR, ".product-item, .product-card")
 
-# ดึงชื่อสินค้า
+# Extract product name
 name = product.find_element(By.CSS_SELECTOR, ".product-name, h3").text
 
-# ดึงราคา
+# Extract price
 price = product.find_element(By.CSS_SELECTOR, ".price, .product-price").text
 ```
 
 ## 📊 Output Format
 
-โปรแกรมจะสร้างไฟล์ CSV ที่มีโครงสร้างดังนี้:
+The program generates a CSV file with the following structure:
 
 | Product Name | Price | Availability |
 |--------------|-------|--------------|
-| สินค้า A     | ฿299  | In Stock     |
-| สินค้า B     | ฿599  | In Stock     |
+| Product A    | $299  | In Stock     |
+| Product B    | $599  | In Stock     |
 
 ## ⚙️ Configuration Options
 
 ### Chrome Options
 
-- `--incognito` - เปิดโหมดไม่ระบุตัวตน
-- `--disable-blink-features=AutomationControlled` - ปิดการแสดงว่าเป็น automation
-- Custom User-Agent - ปลอมเป็น browser ปกติ
+- `--incognito` - Opens browser in incognito mode
+- `--disable-blink-features=AutomationControlled` - Hides automation indicators
+- Custom User-Agent - Mimics regular browser behavior
 
 ### Anti-Detection Features
 
-- ปิดการแสดง webdriver property
-- ใช้ random delays (2-4 วินาที)
-- รีสตาร์ท driver ทุก 50 หน้า
-- รองรับ Cloudflare challenge (รอ 30 วินาที)
+- Removes webdriver property from navigator
+- Random delays (2-4 seconds between requests)
+- Driver restart every 50 pages
+- Cloudflare challenge handling (30-second wait)
 
 ## 🔧 Troubleshooting
 
-### ปัญหา: ChromeDriver ไม่ทำงาน
+### Issue: ChromeDriver not working
 
-**วิธีแก้:**
-- ตรวจสอบว่าติดตั้ง Chrome browser แล้ว
-- ลบ cache ของ webdriver-manager: `rm -rf ~/.wdm`
+**Solution:**
+- Verify Chrome browser is installed
+- Clear webdriver-manager cache: `rm -rf ~/.wdm`
 
-### ปัญหา: ไม่พบ elements
+### Issue: Elements not found
 
-**วิธีแก้:**
-- ตรวจสอบ CSS selectors ว่าตรงกับเว็บไซต์เป้าหมาย
-- เพิ่ม delay time ให้มากขึ้น
-- ใช้ browser developer tools เพื่อหา selectors ที่ถูกต้อง
+**Solution:**
+- Verify CSS selectors match the target website
+- Increase delay time
+- Use browser developer tools to find correct selectors
 
-### ปัญหา: ถูก Cloudflare block
+### Issue: Blocked by Cloudflare
 
-**วิธีแก้:**
-- เพิ่ม delay time
-- ลดจำนวนหน้าที่ scrape ต่อครั้ง
-- ใช้ proxy หรือ VPN
+**Solution:**
+- Increase delay time between requests
+- Reduce number of pages scraped per session
+- Use proxy or VPN
 
 ## 📝 Notes
 
-- ⚠️ **Legal Notice**: ตรวจสอบ Terms of Service ของเว็บไซต์เป้าหมายก่อนใช้งาน
-- ⚠️ **Rate Limiting**: ใช้ delay ที่เหมาะสมเพื่อไม่ให้เซิร์ฟเวอร์เป้าหมายโดนโหลดมากเกินไป
-- 💡 **Tip**: ทดสอบกับหน้าเดียวก่อน (END_PAGE = 1) เพื่อตรวจสอบว่า selectors ทำงานถูกต้อง
+- ⚠️ **Legal Notice**: Always check the target website's Terms of Service before scraping
+- ⚠️ **Rate Limiting**: Use appropriate delays to avoid overloading target servers
+- 💡 **Tip**: Test with a single page first (END_PAGE = 1) to verify selectors work correctly
 
 ## 🤝 Contributing
 
-Pull requests are welcome! สำหรับการเปลี่ยนแปลงใหญ่ๆ กรุณาเปิด issue เพื่อหารือก่อน
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 ## 📄 License
 
@@ -139,7 +139,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-Created with ❤️ by [Your Name]
+Created with ❤️ by [kitthiphatn](https://github.com/kitthiphatn)
 
 ## 🔗 Links
 
